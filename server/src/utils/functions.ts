@@ -27,7 +27,7 @@ export var throwError = async (res: Response, code: number, e: any) => {
     res.status(code).json({
         success: false,
         error: {
-            reason: e.msg
+            reason: e.toString()
         }
     })
 }

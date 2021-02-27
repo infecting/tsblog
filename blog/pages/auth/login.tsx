@@ -4,15 +4,15 @@ import {NextRouter, useRouter} from 'next/router'
 
 export default function Login() {
     const history: NextRouter = useRouter();
-    const [email, setEmail] = useState("")
+    const [username, setUsername] = useState("")
     const [password, setPassword] = useState("")
     const submitHandle = async (e: FormEvent) => {
         e.preventDefault()
         try {
-            let res = await login(email, password)
+            let res = await login(username, password)
             if (res.accessToken) {
                 localStorage.setItem("id", res.user._id)
-                history.push("/movies")
+                history.push("/")
             }
         } catch(e) {
             console.error(e)
@@ -22,8 +22,8 @@ export default function Login() {
     return (
         <div className="wrapper">
             <form onSubmit={(e) => submitHandle(e)}>
-                <label htmlFor="email">Email</label>
-                <input id="email" type="email" onChange={(e) => setEmail(e.target.value)}/>
+                <label htmlFor="username">Username</label>
+                <input id="username" type="username" onChange={(e) => setUsername(e.target.value)}/>
                 <br/>
                 <label htmlFor="password">Password:</label>
                 <input id="password" type="password" onChange={(e) => setPassword(e.target.value)}/>

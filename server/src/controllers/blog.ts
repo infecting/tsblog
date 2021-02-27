@@ -6,7 +6,22 @@ import { IBlog } from '../utils/types';
 export let getBlogs = async (req: Request, res: Response) => {
     try {
         const s: string = req.query.s as string
-        const blogs: IBlog[] = await Blog.find({skills: s});
+        if (!s) {
+            const blogs: IBlog[] = await Blog.find()
+            ok(res, "blogs", blogs);
+        } else {
+            const blogs: IBlog[] = await Blog.find({skills: s});
+            ok(res, "blogs", blogs);
+        }
+    } catch(e) {
+        throwError(res, 500, "Server Error")
+    }
+}
+
+export let recentBlogs = async(req:Request, res:Response) => {
+    try {
+        const blogs: IBlog[] = await Blog.find({}, {}, {sort: {"createdAt": -1}})
+        console.log(blogs)
         ok(res, "blogs", blogs);
     } catch(e) {
         throwError(res, 500, "Server Error")
@@ -28,7 +43,7 @@ export let getBlog = async (req: Request, res: Response) => {
 
 export let createBlog = async(req: Request, res: Response) => {
     try {
-        const newBlog: IBlog = await Blog.create({text: req.body.text, skills: req.body.skills})
+        const newBlog: IBlog = await Blog.create({title: req.body.title, text: req.body.text, skills: req.body.skills})
         ok(res, "newBlog", newBlog);
     } catch(e) {
         throwError(res, 500, "Server Error")

@@ -17,15 +17,13 @@ export let getUsers = async (req: Request, res: Response) => {
 
 export let register = async(req:Request, res:Response) => {
     try {
-        let userCheck: IUser|null = await User.findOne({email: req.body.email})
+        let userCheck: IUser|null = await User.findOne({username: req.body.username})
         if (userCheck) {
             throwError(res, 400, "USER EXISTS")
         }
         const hash:string = await argon2.hash(req.body.password)
         await User.create({
-            email: req.body.email,
             username: req.body.username,
-            profilePicture: req.body.profilePicture,
             password: hash
         })
         ok(res, "newUser", "USER REGISTERED")
@@ -36,7 +34,7 @@ export let register = async(req:Request, res:Response) => {
 
 export let login = async(req: Request, res: Response) => {
     try {
-        let userCheck: IUser|null = await User.findOne({email: req.body.email})
+        let userCheck: IUser|null = await User.findOne({username: req.body.username})
         if (!userCheck) {
             throw new Error("User not found")
         }
@@ -51,13 +49,13 @@ export let login = async(req: Request, res: Response) => {
             res.cookie("jid",cookie, {
                 httpOnly: true,
                 path: "/",
-                domain: __prod__ ? ".api.indiefilms.surf": undefined,
+                domain: __prod__ ? ".api.dword.dev": undefined,
                 secure: __prod__,
                 maxAge: 1000 * 60 * 60 * 24 * 7 // 7 days
             })
             auth(res, token, userCheck)
         } else {
-            throwError(res, 403, "PASSWORD INCORRECT")
+            throw new Error("Password Incorrect")
         }
     } catch(e) {
         throwError(res, 500, e)

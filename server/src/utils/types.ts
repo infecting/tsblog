@@ -8,14 +8,7 @@ export interface IUser extends Document {
 
 export interface IBlog extends Document {
     _id: ObjectId;
+    title: string;
     text: string;
     skills: string;
-}
-
-export enum skills {
-    programming,
-    chess,
-    dunk,
-    guitar,
-    skateboarding
 }
