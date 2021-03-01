@@ -1,4 +1,4 @@
-import {useState} from 'react'
+import {useState, useEffect} from 'react'
 import { createBlog, refreshToken } from '../../api'
 import {useRouter} from 'next/router'
 
@@ -11,6 +11,17 @@ export default function index() {
     const [token, setToken] = useState("");
     const [error, setError] = useState("")
     const submitHandler = async() => {
+        refresh();
+        try {
+            const res = await createBlog(token, title, html, skill, coverPicture);
+            console.log(res)
+            history.push(`blogs/${res.newBlog._id}`)
+        } catch(e) {
+            setError(e.toString())
+        }
+    }
+
+    let refresh = async() => {
         try {
             let token = await refreshToken();
             if (!token.accessToken) {
@@ -19,19 +30,13 @@ export default function index() {
                 setToken(token.accessToken)
             }
         } catch(e) {
-            history.push("/auth/login")
+            history.push('/auth/login')
         }
-        try {
-            const res = await createBlog(token, title, html, skill, coverPicture);
-            console.log(res)
-            history.push(`blogs/${res.newBlog._id}`)
-        } catch(e) {
-            setError(e.toString())
-        }
-        
-
-        
     }
+
+    useEffect(() => {
+        refresh();
+    }, [])
 
     return (
         <div className="edit">

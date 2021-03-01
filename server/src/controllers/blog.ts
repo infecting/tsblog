@@ -20,8 +20,7 @@ export let getBlogs = async (req: Request, res: Response) => {
 
 export let recentBlogs = async(req:Request, res:Response) => {
     try {
-        const blogs: IBlog[] = await Blog.find({}, {}, {sort: {"createdAt": -1}})
-        console.log(blogs)
+        const blogs: IBlog[] = await Blog.find({}, {}, {sort: {"createdAt": -1}}).limit(3)
         ok(res, "blogs", blogs);
     } catch(e) {
         throwError(res, 500, "Server Error")
@@ -32,6 +31,7 @@ export let getBlog = async (req: Request, res: Response) => {
     try {
         const id: string = req.params.id
         const blog: IBlog |null = await Blog.findById(id);
+        await Blog.findByIdAndUpdate(id, {$inc: {"views": 1}}, {new:true})
         if (!blog) {
             throw new Error("No blog found by this id")
         }

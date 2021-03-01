@@ -36,6 +36,7 @@ const Blog = () => {
 
   return (
     <>
+    {error ? <p>{error}</p>: null}
     {pid}
     {blogs ? <div dangerouslySetInnerHTML={{__html: blogs.text}}></div>: null}
     </>

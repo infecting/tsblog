@@ -11,5 +11,6 @@ export interface IBlog extends Document {
     title: string;
     text: string;
     skills: string;
+    views: number;
     coverPicture: string;
 }

@@ -42,7 +42,8 @@ export var connectDatabase = async () => {
               pass: process.env.PASSWORD,
               "useNewUrlParser": true,
               "useCreateIndex": true,
-              "useUnifiedTopology": true
+              "useUnifiedTopology": true,
+              "useFindAndModify": false
             })
         console.log("Database connection established")                          
     } catch (e) {                                                               

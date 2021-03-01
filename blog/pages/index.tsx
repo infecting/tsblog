@@ -12,7 +12,7 @@ export default function Home() {
       console.log(res.blogs)
       setBlogs(res.blogs)
     } catch(e) {
-      setError("Oops we hit an error :(")
+      setError("Oops we hit an error fetching that data :(")
     }
   }
   useEffect(() => {
