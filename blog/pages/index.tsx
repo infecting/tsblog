@@ -30,7 +30,7 @@ export default function Home() {
       <h1>Recent Posts</h1>
       {error ? <p>{error}</p>: null}
       {blogs.map((blog) => (
-        <div className="blog">
+        <div key={blog._id} className="blog">
             <Link href={`/blogs/${blog._id}`}>{blog.title}</Link>
             <br/>
         </div>

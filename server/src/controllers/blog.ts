@@ -43,7 +43,7 @@ export let getBlog = async (req: Request, res: Response) => {
 
 export let createBlog = async(req: Request, res: Response) => {
     try {
-        const newBlog: IBlog = await Blog.create({title: req.body.title, text: req.body.text, skills: req.body.skills})
+        const newBlog: IBlog = await Blog.create({title: req.body.title, text: req.body.text, skills: req.body.skills, coverPicture: req.body.coverPicture})
         ok(res, "newBlog", newBlog);
     } catch(e) {
         throwError(res, 500, "Server Error")

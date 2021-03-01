@@ -7,6 +7,7 @@ export default function index() {
     const [title, setTitle] = useState("");
     const [html, setHTML] = useState("<div class='wrapper'><h1>title</h1></div>");
     const [skill, setSkill] = useState("programming");
+    const [coverPicture, setCoverPicture] = useState("");
     const [token, setToken] = useState("");
     const [error, setError] = useState("")
     const submitHandler = async() => {
@@ -21,7 +22,7 @@ export default function index() {
             history.push("/auth/login")
         }
         try {
-            const res = await createBlog(token, title, html, skill);
+            const res = await createBlog(token, title, html, skill, coverPicture);
             console.log(res)
             history.push(`blogs/${res.newBlog._id}`)
         } catch(e) {
@@ -37,6 +38,7 @@ export default function index() {
             <div className="editor">
                 {error ? <h1 color="white">{error}</h1>: null}
                 <input type="text" onChange={e => setTitle(e.target.value)} placeholder="Title"/>
+                <input type="text" onChange={e => setCoverPicture(e.target.value)} placeholder="Cover Picture"/>
                 <select name="" id="" onChange={(e) => setSkill(e.target.value)} defaultValue="programming">
                     <option value="programming">Programming</option>
                     <option value="blackjack">Blackjack</option>

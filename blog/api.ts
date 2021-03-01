@@ -37,12 +37,16 @@ export async function getBlogs(): Promise<{blogs: IBlog[]}> {
     return await sendApiRequest("GET", "blogs", false)
 }
 
+export async function getSkillsBlogs(skills:string): Promise<{blogs: IBlog[]}> {
+    return await sendApiRequest("GET", `blogs?s=${skills}`, false)
+}
+
 export async function getRecentBlogs(): Promise<{blogs: IBlog[]}> {
     return await sendApiRequest("GET", "blogs/recent", false)
 }
 
-export async function createBlog(token: string, title: string, text: string, skills: string): Promise<{newBlog: IBlog}> {
-    return await sendApiRequest("POST", "blogs/create", false, {title: title, text: text, skills: skills}, {"Authorization": token})
+export async function createBlog(token: string, title: string, text: string, skills: string, coverPicture: string): Promise<{newBlog: IBlog}> {
+    return await sendApiRequest("POST", "blogs/create", false, {title: title, text: text, skills: skills, coverPicture: coverPicture}, {"Authorization": token})
 }
 
 export async function getBlog(id: string[] | string): Promise<{blogs: IBlog}> {
@@ -65,6 +69,7 @@ export interface IBlog {
     title: string;
     text: string;
     skills: "programming" | "guitar" | "skateboarding" | "blackjack" | "dunk";
+    coverPicture: string;
     createdAt: string;
     updatedAt: string;
 }
