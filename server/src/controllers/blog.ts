@@ -18,7 +18,7 @@ export let getBlogs = async (req: Request, res: Response) => {
     }
 }
 
-export let recentBlogs = async(req:Request, res:Response) => {
+export let recentBlogs = async(_req:Request, res:Response) => {
     try {
         const blogs: IBlog[] = await Blog.find({}, {}, {sort: {"createdAt": -1}}).limit(3)
         ok(res, "blogs", blogs);
@@ -30,7 +30,7 @@ export let recentBlogs = async(req:Request, res:Response) => {
 export let getBlog = async (req: Request, res: Response) => {
     try {
         const id: string = req.params.id
-        const blog: IBlog |null = await Blog.findById(id);
+        const blog: IBlog | null = await Blog.findById(id);
         await Blog.findByIdAndUpdate(id, {$inc: {"views": 1}}, {new:true})
         if (!blog) {
             throw new Error("No blog found by this id")

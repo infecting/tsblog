@@ -70,6 +70,7 @@ export interface IBlog {
     text: string;
     skills: "programming" | "guitar" | "skateboarding" | "blackjack" | "dunk";
     coverPicture: string;
+    views: number;
     createdAt: string;
     updatedAt: string;
 }

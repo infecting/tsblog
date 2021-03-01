@@ -6,7 +6,7 @@ import * as argon2 from 'argon2'
 import {sign, verify} from 'jsonwebtoken';
 import {__prod__} from '../utils/constants'
 
-export let getUsers = async (req: Request, res: Response) => {
+export let getUsers = async (_req: Request, res: Response) => {
     try {
         const users: Array<IUser> = await User.find()
         ok(res, "users", users)
