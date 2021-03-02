@@ -1,6 +1,9 @@
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
+import ReactMarkdown from 'react-markdown';
 import { getBlog, IBlog } from '../../api'
+import {Prism as SyntaxHighlighter} from 'react-syntax-highlighter'
+import {dracula} from 'react-syntax-highlighter/dist/cjs/styles/prism'
 
 export async function getServerSideProps(ctx) {
   const { pid } = ctx.query;
@@ -34,11 +37,20 @@ const Blog = () => {
     helper(pid)
   }, [])
 
+  const renderers = {
+    code:({language,value})=>{
+    var newCode = value
+    var oldCode = value || oldCode
+ 
+    return <SyntaxHighlighter style={dracula} language={language} children={newCode || "" } />
+ }
+ }
   return (
     <>
     {error ? <p>{error}</p>: null}
     {pid}
-    {blogs ? <div dangerouslySetInnerHTML={{__html: blogs.text}}></div>: null}
+    {blogs ? <ReactMarkdown children={blogs.text} renderers={renderers}/>: null}
+    
     </>
   )
 }

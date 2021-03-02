@@ -6,6 +6,7 @@ export default function Login() {
     const history: NextRouter = useRouter();
     const [username, setUsername] = useState("")
     const [password, setPassword] = useState("")
+    const [error, setError] = useState("")
     const submitHandle = async (e: FormEvent) => {
         e.preventDefault()
         try {
@@ -15,12 +16,13 @@ export default function Login() {
                 history.push("/")
             }
         } catch(e) {
-            console.error(e)
+            setError(e.toString())
         }
         
     }
     return (
         <div className="wrapper">
+            {error ? <p>{error}</p>: null}
             <form onSubmit={(e) => submitHandle(e)}>
                 <label htmlFor="username">Username</label>
                 <input id="username" type="username" onChange={(e) => setUsername(e.target.value)}/>

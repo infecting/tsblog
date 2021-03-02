@@ -2,12 +2,13 @@ import axios from 'axios';
 import { send } from 'process';
 
 async function sendApiRequest<T>(method: "GET" | "PUT" | "POST" | "DELETE" | "PATCH", path: string, withCredentials:boolean, data?: any, headers?: any): Promise<T> {
-        path = `${process.env.NEXT_PUBLIC_URI}api/v1/${path}`;
-        const response = await axios.request({method, baseURL: path, data, withCredentials:withCredentials, headers: headers});
-        const success: boolean = response.data.success;
+    path = `${process.env.NEXT_PUBLIC_URI}api/v1/${path}`;
+    const response = await axios.request({method, baseURL: path, data, withCredentials:withCredentials, headers: headers});
+    const success: boolean = response.data.success;
     if (success) {
         return response.data.data as T;
     } else {
+        console.log(response.data)
         if (response.data.error) {
             throw new Error(response.data.error);
         } else {
