@@ -1,5 +1,4 @@
 import axios from 'axios';
-import { send } from 'process';
 
 async function sendApiRequest<T>(method: "GET" | "PUT" | "POST" | "DELETE" | "PATCH", path: string, withCredentials:boolean, data?: any, headers?: any): Promise<T> {
     path = `${process.env.NEXT_PUBLIC_URI}api/v1/${path}`;
@@ -69,7 +68,7 @@ export interface IBlog {
     _id: string;
     title: string;
     text: string;
-    skills: "programming" | "guitar" | "skateboarding" | "blackjack" | "dunk";
+    skills: string;
     coverPicture: string;
     views: number;
     createdAt: string;

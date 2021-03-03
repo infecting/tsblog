@@ -1,5 +1,5 @@
 # TSBLOG
-** A type defined blog written with nextjs with a custom typescript cms backend
+**A type defined blog written with nextjs with a custom typescript cms backend**
 
 ## Features
 * Write blogs and see preview in real time using react-markdown
